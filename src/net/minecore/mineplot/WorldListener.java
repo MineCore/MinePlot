@@ -11,9 +11,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class WorldListener implements Listener {
 	
-	private MinePermit mp;
+	private MinePlot mp;
 
-	public WorldListener(MinePermit mp){
+	public WorldListener(MinePlot mp){
 		this.mp = mp;
 	}
 	

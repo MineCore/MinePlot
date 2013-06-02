@@ -2,7 +2,7 @@ package net.minecore.mineplot.miner;
 
 import java.util.ArrayList;
 
-import net.minecore.mineplot.MinePermit;
+import net.minecore.mineplot.MinePlot;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 public class MinerManager {
 	
 	private ArrayList<Miner> miners;
-	private MinePermit minepermmit;
+	private MinePlot minepermmit;
 	
-	public MinerManager(MinePermit m){
+	public MinerManager(MinePlot m){
 		this.minepermmit = m;
 		
 		miners = new ArrayList<Miner>();

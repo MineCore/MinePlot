@@ -2,7 +2,7 @@ package net.minecore.mineplot.world;
 
 import java.util.ArrayList;
 
-import net.minecore.mineplot.MinePermit;
+import net.minecore.mineplot.MinePlot;
 import net.minecore.mineplot.plot.Plot;
 
 import org.bukkit.Location;

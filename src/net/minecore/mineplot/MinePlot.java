@@ -13,7 +13,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class MinePermit extends JavaPlugin {
+public class MinePlot extends JavaPlugin {
 
 	public static Logger log;
 	private FileConfiguration conf;

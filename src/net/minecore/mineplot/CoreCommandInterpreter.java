@@ -9,9 +9,9 @@ import org.bukkit.command.ConsoleCommandSender;
 
 public class CoreCommandInterpreter implements CommandExecutor {
 
-	private MinePermit mp;
+	private MinePlot mp;
 
-	public CoreCommandInterpreter(MinePermit minePermit) {
+	public CoreCommandInterpreter(MinePlot minePermit) {
 		this.mp = minePermit;
 	}
 

@@ -15,9 +15,9 @@ import org.bukkit.command.ConsoleCommandSender;
 
 public class PlotCommandInterpreter implements CommandExecutor {
 
-	private MinePermit mp;
+	private MinePlot mp;
 
-	public PlotCommandInterpreter(MinePermit minePermit) {
+	public PlotCommandInterpreter(MinePlot minePermit) {
 		this.mp = minePermit;
 	}
 

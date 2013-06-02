@@ -2,7 +2,7 @@ package net.minecore.mineplot.plot;
 
 import java.util.ArrayList;
 
-import net.minecore.mineplot.MinePermit;
+import net.minecore.mineplot.MinePlot;
 import net.minecore.mineplot.world.BlockPriceDefinition;
 import net.minecore.mineplot.world.PermitWorld;
 
