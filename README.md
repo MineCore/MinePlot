@@ -1,4 +1,4 @@
 MinePlot
-========
+==========
 
-Create Plots where your users can mine for materials.
+A plugin that allow players on a server to buy plots of land to mine in.
