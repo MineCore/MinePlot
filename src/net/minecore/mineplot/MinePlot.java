@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import net.minecore.mineplot.miner.MinerManager;
-import net.minecore.mineplot.world.PermitWorld;
-import net.minecore.mineplot.world.PermitWorldManager;
+import net.minecore.mineplot.world.PlotWorld;
+import net.minecore.mineplot.world.PlotWorldManager;
 
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -17,7 +17,7 @@ public class MinePlot extends JavaPlugin {
 
 	public Logger log;
 	private FileConfiguration conf;
-	private PermitWorldManager pwm;
+	private PlotWorldManager pwm;
 	private MinerManager mm;
 	
 	@Override
@@ -31,7 +31,7 @@ public class MinePlot extends JavaPlugin {
 		if(worlds == null)
 			worlds = conf.createSection("worlds");
 		
-		pwm = new PermitWorldManager();
+		pwm = new PlotWorldManager();
 		
 		for(String s : worlds.getKeys(false)){
 			World w;
@@ -39,7 +39,7 @@ public class MinePlot extends JavaPlugin {
 				log.warning("Configuration values for world " + s + " can't be loaded because the world doesn't exist.");
 			else{
 				log.info("Loading world " + s);
-				pwm.addPermitWorld(PermitWorld.getNewPermitWorld(worlds.getConfigurationSection(s), w));
+				pwm.addPermitWorld(PlotWorld.getNewPermitWorld(worlds.getConfigurationSection(s), w));
 			}
 		}
 		
@@ -68,7 +68,7 @@ public class MinePlot extends JavaPlugin {
 			return false;
 		
 		ConfigurationSection worlds = conf.getConfigurationSection("worlds");
-		pwm.addPermitWorld(PermitWorld.getNewPermitWorld(worlds.createSection(w.getName()), w));
+		pwm.addPermitWorld(PlotWorld.getNewPermitWorld(worlds.createSection(w.getName()), w));
 		
 		saveConf();
 		
@@ -98,7 +98,7 @@ public class MinePlot extends JavaPlugin {
 	/**
 	 * @return the pwm
 	 */
-	public PermitWorldManager getPWM() {
+	public PlotWorldManager getPWM() {
 		return pwm;
 	}
 

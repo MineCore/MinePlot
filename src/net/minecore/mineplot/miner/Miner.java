@@ -4,39 +4,15 @@ import java.util.ArrayList;
 
 import net.minecore.mineplot.plot.Plot;
 
-import org.bukkit.Location;
-
 public class Miner{
 	
 	private ArrayList<Plot> plots;
-	private ArrayList<Permit> permits;
 	private String name;
 	
 	public Miner(String name){
 		
 		this.name = name;
-		permits = new ArrayList<Permit>();
 		plots = new ArrayList<Plot>();
-		
-	}
-	
-	public Permit getPermit(Location l)
-	{
-		for(Permit p : permits){
-			if(p.contains(l))
-				return p;
-		}	
-			return null;
-	}
-	
-	public String getName(){
-		return name;
-	}
-	
-	public void addPermit(Permit p){
-		
-		permits.add(p);
-		p.setOwner(this);
 		
 	}
 
@@ -62,5 +38,9 @@ public class Miner{
 			if(p.getName().equals(name))
 				return p;
 		return null;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

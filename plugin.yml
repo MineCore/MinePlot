@@ -3,6 +3,8 @@ author: Numenorean95
 authors: [tcoan98]
 name: MinePlot
 version: 1.0.0
+load: POSTWORLD
+depend: [MineCore]
 
 commands:
     plot:

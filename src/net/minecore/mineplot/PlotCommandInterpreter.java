@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.minecore.mineplot.miner.Miner;
 import net.minecore.mineplot.plot.Plot;
-import net.minecore.mineplot.world.PermitWorld;
+import net.minecore.mineplot.world.PlotWorld;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -44,7 +44,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 					return true;
 				}
 				
-				PermitWorld pw = mp.getPWM().getPermitWorld(w);
+				PlotWorld pw = mp.getPWM().getPermitWorld(w);
 				if(pw == null){
 					sender.sendMessage(ChatColor.DARK_GRAY + "That world is not able to have plots.");
 					return true;
@@ -85,7 +85,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 			if(args.length < 3)
 				return false;
 			
-			PermitWorld pw = mp.getPWM().getPermitWorld(mp.getServer().getPlayer(sender.getName()).getLocation().getWorld());
+			PlotWorld pw = mp.getPWM().getPermitWorld(mp.getServer().getPlayer(sender.getName()).getLocation().getWorld());
 			
 			if(pw == null){
 				sender.sendMessage("This world does not allow you to buy plots!");
@@ -155,7 +155,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 			if(args.length < 3)
 				return false;
 			
-			PermitWorld pw = mp.getPWM().getPermitWorld(mp.getServer().getPlayer(sender.getName()).getLocation().getWorld());
+			PlotWorld pw = mp.getPWM().getPermitWorld(mp.getServer().getPlayer(sender.getName()).getLocation().getWorld());
 			
 			if(pw == null){
 				sender.sendMessage("This world does not allow you to buy plots!");

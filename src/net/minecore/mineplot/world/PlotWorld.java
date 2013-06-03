@@ -9,7 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
-public class PermitWorld {
+public class PlotWorld {
 	
 	private int maxPlotSize, minPlotSize, uncalculatedCostPerBlock, maxPlots, spacing;
 	private boolean calculatePlotCost;
@@ -17,7 +17,7 @@ public class PermitWorld {
 	private World world;
 	private ArrayList<Plot> plots;
 
-	public PermitWorld(World world, int maxPlotSize, int minPlotSize, boolean calculatePlotCost, int uncalculatedCostPerBlock, int maxPlots, int spacing, BlockPriceDefinition bpd) {
+	public PlotWorld(World world, int maxPlotSize, int minPlotSize, boolean calculatePlotCost, int uncalculatedCostPerBlock, int maxPlots, int spacing, BlockPriceDefinition bpd) {
 		this.maxPlotSize = maxPlotSize;
 		this.minPlotSize = minPlotSize;
 		this.calculatePlotCost = calculatePlotCost;
@@ -95,7 +95,7 @@ public class PermitWorld {
 		return null;
 	}
 
-	public static PermitWorld getNewPermitWorld(ConfigurationSection cs, World world) {
+	public static PlotWorld getNewPermitWorld(ConfigurationSection cs, World world) {
 		cs.addDefault("max_plot_size", 60);
 		cs.addDefault("min_plot_size", 10);
 		cs.addDefault("max_plots_per_player", 5);
@@ -109,7 +109,7 @@ public class PermitWorld {
 		
 		BlockPriceDefinition bpd = BlockPriceDefinition.getNewDefinition(blocks);
 		
-		PermitWorld pw = new PermitWorld(world, cs.getInt("max_plot_size"), 
+		PlotWorld pw = new PlotWorld(world, cs.getInt("max_plot_size"), 
 				cs.getInt("min_plot_size"), 
 				cs.getBoolean("calculate_plot_cost"), 
 				cs.getInt("un_calculated_cost_per_block"),

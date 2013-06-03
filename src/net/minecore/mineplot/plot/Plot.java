@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.minecore.mineplot.MinePlot;
 import net.minecore.mineplot.world.BlockPriceDefinition;
-import net.minecore.mineplot.world.PermitWorld;
+import net.minecore.mineplot.world.PlotWorld;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,9 +19,9 @@ public class Plot {
 	private String owner;
 	private ArrayList<String> allowed_players;
 	private String name;
-	private PermitWorld pw;
+	private PlotWorld pw;
 
-	public Plot(Location location1, Location location2, String owner, String name, PermitWorld permitWorld) {
+	public Plot(Location location1, Location location2, String owner, String name, PlotWorld permitWorld) {
 		if(location1 == null || location2 == null)
 			throw new IllegalArgumentException("Locations cannot be null!");
 		

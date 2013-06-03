@@ -30,15 +30,6 @@ public class MinerManager {
 		
 		return m;
 	}
-	
-	public Permit getPermit(Location l){
-		for(Miner m : miners){
-			Permit p = m.getPermit(l);
-			if(p != null) return p;
-		}
-		
-		return null;
-	}
 
 	public Miner getMiner(Player player) {
 		return getMiner(player.getName());

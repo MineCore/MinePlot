@@ -2,7 +2,7 @@ package net.minecore.mineplot;
 
 import net.minecore.mineplot.miner.Miner;
 import net.minecore.mineplot.plot.Plot;
-import net.minecore.mineplot.world.PermitWorld;
+import net.minecore.mineplot.world.PlotWorld;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -21,7 +21,7 @@ public class WorldListener implements Listener {
 	public void onBlockBreak(BlockBreakEvent e){
 		Miner m = mp.getMinerManager().getMiner(e.getPlayer());
 		
-		PermitWorld pw = mp.getPWM().getPermitWorld(e.getBlock().getLocation().getWorld().getName());
+		PlotWorld pw = mp.getPWM().getPermitWorld(e.getBlock().getLocation().getWorld().getName());
 		if(pw == null)
 			return;
 		Plot plot = pw.getContainingPlot(e.getBlock().getLocation());
