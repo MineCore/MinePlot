@@ -11,5 +11,5 @@ commands:
             /<command> list [world]
             /<command> price <x>:<z> <x>:<z>
             /<command> buy <x>:<z> <x>:<z> [name]
-            /<command> <plot_name>
-        permission: mp.plot
+            /<command> init <world>
+        permission: mineplot.plot
