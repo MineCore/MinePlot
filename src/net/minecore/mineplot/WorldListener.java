@@ -1,6 +1,6 @@
 package net.minecore.mineplot;
 
-import net.minecore.mineplot.miner.Miner;
+import net.minecore.mineplot.miner.PlotPlayer;
 import net.minecore.mineplot.plot.Plot;
 import net.minecore.mineplot.world.PlotWorld;
 
@@ -19,7 +19,7 @@ public class WorldListener implements Listener {
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e){
-		Miner m = mp.getMinerManager().getMiner(e.getPlayer());
+		PlotPlayer m = mp.getMinerManager().getMiner(e.getPlayer());
 		
 		PlotWorld pw = mp.getPWM().getPermitWorld(e.getBlock().getLocation().getWorld().getName());
 		if(pw == null)

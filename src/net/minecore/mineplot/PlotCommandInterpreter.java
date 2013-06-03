@@ -2,7 +2,7 @@ package net.minecore.mineplot;
 
 import java.util.ArrayList;
 
-import net.minecore.mineplot.miner.Miner;
+import net.minecore.mineplot.miner.PlotPlayer;
 import net.minecore.mineplot.plot.Plot;
 import net.minecore.mineplot.world.PlotWorld;
 
@@ -109,7 +109,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				return true;
 			}
 			
-			Miner m = mp.getMinerManager().getMiner(sender.getName());
+			PlotPlayer m = mp.getMinerManager().getMiner(sender.getName());
 			
 			int numPlots = 0;
 			for(Plot p : m.getPlots())

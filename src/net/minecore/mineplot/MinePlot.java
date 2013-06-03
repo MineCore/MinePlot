@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import net.minecore.mineplot.miner.MinerManager;
+import net.minecore.MineCore;
+import net.minecore.Miner;
+import net.minecore.mineplot.miner.PlotPlayerManager;
 import net.minecore.mineplot.world.PlotWorld;
 import net.minecore.mineplot.world.PlotWorldManager;
 
@@ -18,7 +20,7 @@ public class MinePlot extends JavaPlugin {
 	public Logger log;
 	private FileConfiguration conf;
 	private PlotWorldManager pwm;
-	private MinerManager mm;
+	private PlotPlayerManager mm;
 	
 	@Override
 	public void onLoad(){
@@ -45,7 +47,7 @@ public class MinePlot extends JavaPlugin {
 		
 		saveConf();
 		
-		mm = new MinerManager(this);
+		mm = new PlotPlayerManager(this);
 		
 		log.info("Loaded!");
 	}
@@ -102,7 +104,11 @@ public class MinePlot extends JavaPlugin {
 		return pwm;
 	}
 
-	public MinerManager getMinerManager() {
+	public PlotPlayerManager getMinerManager() {
 		return mm;
+	}
+
+	public MineCore getMineCore() {
+		return ((MineCore)getServer().getPluginManager().getPlugin("MineCore"));
 	}
 }

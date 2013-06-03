@@ -2,18 +2,18 @@ package net.minecore.mineplot.miner;
 
 import java.util.ArrayList;
 
+import net.minecore.Miner;
 import net.minecore.mineplot.plot.Plot;
 
-public class Miner{
+public class PlotPlayer{
 	
 	private ArrayList<Plot> plots;
-	private String name;
+	private Miner m;
 	
-	public Miner(String name){
+	public PlotPlayer(Miner m){
 		
-		this.name = name;
 		plots = new ArrayList<Plot>();
-		
+		this.m = m;
 	}
 
 	public ArrayList<Plot> getPlots() {
@@ -25,11 +25,11 @@ public class Miner{
 	}
 	
 	public boolean addPlot(Plot p){
-		if(p.getOwner() != null && !p.getOwner().equals(name))
+		if(p.getOwner() != null && !p.getOwner().equals(m.getPlayerName()))
 			return false;
 		
 		plots.add(p);
-		p.setOwner(name);
+		p.setOwner(m.getPlayerName());
 		return true;
 	}
 
@@ -41,6 +41,14 @@ public class Miner{
 	}
 
 	public String getName() {
-		return name;
+		return m.getPlayerName();
+	}
+	
+	public Miner getMiner(){
+		return m;
+	}
+	
+	public void save(){
+		
 	}
 }
