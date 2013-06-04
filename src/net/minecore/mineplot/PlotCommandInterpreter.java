@@ -12,6 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 public class PlotCommandInterpreter implements CommandExecutor {
 
@@ -121,7 +122,11 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				return true;
 			}
 			
-			//TODO: Charge player
+			int cost = new1.calculateCost();
+			if(!mp.getMineCore().getEconomyManager().charge((Player)sender, cost)){
+				sender.sendMessage(ChatColor.DARK_RED + "You dont have enough money! Costs " +  cost);
+				return true;
+			}
 			
 			if(!pw.registerPlot(new1)){
 				sender.sendMessage(ChatColor.DARK_RED + "Couldn't buy plot!");
