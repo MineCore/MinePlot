@@ -36,4 +36,8 @@ public class PlotPlayerManager {
 		return getPlotPlayer(player.getName());
 		
 	}
+
+	public ArrayList<PlotPlayer> getPlotPlayers() {
+		return miners;
+	}
 }

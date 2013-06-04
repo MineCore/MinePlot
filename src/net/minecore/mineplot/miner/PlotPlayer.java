@@ -23,7 +23,10 @@ public class PlotPlayer{
 		this.m = m;
 		this.mp = mp;
 		
-		plotConf = m.getConfigurationSection("plots");
+		if(m != null){
+			plotConf = m.getConfigurationSection("plots");
+			loadPlots();
+		}
 		
 	}
 

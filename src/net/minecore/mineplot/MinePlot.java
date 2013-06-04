@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import net.minecore.MineCore;
 import net.minecore.Miner;
+import net.minecore.mineplot.miner.PlotPlayer;
 import net.minecore.mineplot.miner.PlotPlayerManager;
 import net.minecore.mineplot.world.PlotWorld;
 import net.minecore.mineplot.world.PlotWorldManager;
@@ -58,6 +59,10 @@ public class MinePlot extends JavaPlugin {
 			log.info("Saving world " + name);
 			pwm.getPermitWorld(name).save(conf.getConfigurationSection("worlds." + name));
 		}*/
+		
+		for(PlotPlayer p : mm.getPlotPlayers())
+			if(!p.savePlots())
+				log.warning("Couldn't save data for player " + p.getName());
 		
 		log.info("Worlds saved");
 		
