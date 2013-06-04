@@ -41,7 +41,7 @@ public class MinePlot extends JavaPlugin {
 				log.warning("Configuration values for world " + s + " can't be loaded because the world doesn't exist.");
 			else{
 				log.info("Loading world " + s);
-				pwm.addPermitWorld(PlotWorld.getNewPermitWorld(worlds.getConfigurationSection(s), w));
+				pwm.addPlotWorld(PlotWorld.getNewPlotWorld(worlds.getConfigurationSection(s), w));
 			}
 		}
 		
@@ -66,11 +66,11 @@ public class MinePlot extends JavaPlugin {
 	
 	public boolean initWorld(World w){
 		
-		if(pwm.getPermitWorld(w) != null)
+		if(pwm.getPlotWorld(w) != null)
 			return false;
 		
 		ConfigurationSection worlds = conf.getConfigurationSection("worlds");
-		pwm.addPermitWorld(PlotWorld.getNewPermitWorld(worlds.createSection(w.getName()), w));
+		pwm.addPlotWorld(PlotWorld.getNewPlotWorld(worlds.createSection(w.getName()), w));
 		
 		saveConf();
 		
@@ -104,7 +104,7 @@ public class MinePlot extends JavaPlugin {
 		return pwm;
 	}
 
-	public PlotPlayerManager getMinerManager() {
+	public PlotPlayerManager getPlotPlayerManager() {
 		return mm;
 	}
 

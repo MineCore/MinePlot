@@ -1,10 +1,10 @@
 package net.minecore.mineplot.miner;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import net.minecore.mineplot.MinePlot;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class PlotPlayerManager {
@@ -24,14 +24,15 @@ public class PlotPlayerManager {
 				return m;
 		}
 		
-		PlotPlayer m = new PlotPlayer(mineplot.getMineCore().get);
+		PlotPlayer m = new PlotPlayer(mineplot.getMineCore().getMiner(name), mineplot);
 		
 		miners.add(m);
+		m.loadPlots();
 		
 		return m;
 	}
 
-	public PlotPlayer getMiner(Player player) {
+	public PlotPlayer getPlotPlayer(Player player) {
 		return getPlotPlayer(player.getName());
 		
 	}

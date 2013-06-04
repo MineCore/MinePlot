@@ -19,9 +19,9 @@ public class WorldListener implements Listener {
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e){
-		PlotPlayer m = mp.getMinerManager().getMiner(e.getPlayer());
+		PlotPlayer m = mp.getPlotPlayerManager().getPlotPlayer(e.getPlayer());
 		
-		PlotWorld pw = mp.getPWM().getPermitWorld(e.getBlock().getLocation().getWorld().getName());
+		PlotWorld pw = mp.getPWM().getPlotWorld(e.getBlock().getLocation().getWorld().getName());
 		if(pw == null)
 			return;
 		Plot plot = pw.getContainingPlot(e.getBlock().getLocation());

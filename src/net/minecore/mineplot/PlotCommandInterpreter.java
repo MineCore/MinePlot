@@ -44,7 +44,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 					return true;
 				}
 				
-				PlotWorld pw = mp.getPWM().getPermitWorld(w);
+				PlotWorld pw = mp.getPWM().getPlotWorld(w);
 				if(pw == null){
 					sender.sendMessage(ChatColor.DARK_GRAY + "That world is not able to have plots.");
 					return true;
@@ -65,7 +65,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				return true;
 			} else {
 				
-				ArrayList<Plot> plots = mp.getMinerManager().getMiner(sender.getName()).getPlots();
+				ArrayList<Plot> plots = mp.getPlotPlayerManager().getPlotPlayer(sender.getName()).getPlots();
 				
 				if(plots.size() == 0)
 					sender.sendMessage("You have no plots!");
@@ -85,7 +85,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 			if(args.length < 3)
 				return false;
 			
-			PlotWorld pw = mp.getPWM().getPermitWorld(mp.getServer().getPlayer(sender.getName()).getLocation().getWorld());
+			PlotWorld pw = mp.getPWM().getPlotWorld(mp.getServer().getPlayer(sender.getName()).getLocation().getWorld());
 			
 			if(pw == null){
 				sender.sendMessage("This world does not allow you to buy plots!");
@@ -109,7 +109,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				return true;
 			}
 			
-			PlotPlayer m = mp.getMinerManager().getMiner(sender.getName());
+			PlotPlayer m = mp.getPlotPlayerManager().getPlotPlayer(sender.getName());
 			
 			int numPlots = 0;
 			for(Plot p : m.getPlots())
@@ -155,7 +155,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 			if(args.length < 3)
 				return false;
 			
-			PlotWorld pw = mp.getPWM().getPermitWorld(mp.getServer().getPlayer(sender.getName()).getLocation().getWorld());
+			PlotWorld pw = mp.getPWM().getPlotWorld(mp.getServer().getPlayer(sender.getName()).getLocation().getWorld());
 			
 			if(pw == null){
 				sender.sendMessage("This world does not allow you to buy plots!");
@@ -207,7 +207,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 			}
 
 
-			if(mp.getPWM().getPermitWorld(w) != null){
+			if(mp.getPWM().getPlotWorld(w) != null){
 
 
 				if(sender instanceof ConsoleCommandSender)

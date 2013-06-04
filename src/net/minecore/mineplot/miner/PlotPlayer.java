@@ -3,17 +3,28 @@ package net.minecore.mineplot.miner;
 import java.util.ArrayList;
 
 import net.minecore.Miner;
+import net.minecore.mineplot.MinePlot;
 import net.minecore.mineplot.plot.Plot;
+import net.minecore.mineplot.world.PlotWorld;
+
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 
 public class PlotPlayer{
 	
 	private ArrayList<Plot> plots;
 	private Miner m;
+	private ConfigurationSection plotConf;
+	private MinePlot mp;
 	
-	public PlotPlayer(Miner m){
+	public PlotPlayer(Miner m, MinePlot mp){
 		
 		plots = new ArrayList<Plot>();
 		this.m = m;
+		this.mp = mp;
+		
+		plotConf = m.getConfigurationSection("plots");
+		
 	}
 
 	public ArrayList<Plot> getPlots() {
@@ -48,7 +59,70 @@ public class PlotPlayer{
 		return m;
 	}
 	
-	public void save(){
+	public boolean savePlots(){
+		if(m == null)
+			return false;
+		
+		for(Plot p : plots){
+			plotConf.set(p.getName(), null);
+			ConfigurationSection cs = plotConf.createSection(p.getName());
+			cs.set("world", p.getLocation1().getWorld().getName());
+			cs.set("x1", p.getLocation1().getBlockX());
+			cs.set("z1", p.getLocation1().getBlockZ());
+			cs.set("x2", p.getLocation2().getBlockX());
+			cs.set("z2", p.getLocation2().getBlockZ());
+		}
+		
+		return true;
+	}
+
+	public boolean loadPlots() {
+		if(m == null)
+			return false;
+		
+		mp.log.info("Loading data for player " + m.getPlayerName());
+		
+		for(String s : plotConf.getKeys(false)){
+			if(plotConf.isConfigurationSection(s))
+				try {
+					loadPlotFromConf(s, plotConf.getConfigurationSection(s));
+				} catch(InvalidConfigurationException e){
+					mp.log.warning("Couldn't load plot " + s + ", " + e.getMessage());
+				}
+		}
+		
+		return true;	
+		
+	}
+	
+	private void loadPlotFromConf(String name, ConfigurationSection cs) throws InvalidConfigurationException{
+		
+		String world = cs.getString("world");
+		int x1 = cs.getInt("x1");
+		int z1 = cs.getInt("z1");
+		int x2 = cs.getInt("x2");
+		int z2 = cs.getInt("z2");
+		
+		if(world == null)
+			throw new InvalidConfigurationException("No world set!");
+		
+		PlotWorld pw = mp.getPWM().getPlotWorld(world);
+		
+		if(pw == null)
+			throw new InvalidConfigurationException("World invalid or not initialized!");
+		
+		Plot p = pw.getNewPlot(x1, z1, x2, z2);
+		
+		if(p == null)
+			throw new InvalidConfigurationException("Plot invalid!");
+		
+		if(!pw.registerPlot(p))
+			throw new InvalidConfigurationException("Plot invalid! Error during registration.");
+		
+		p.setName(name);
+		p.setOwner(m.getPlayerName());
+		
+		addPlot(p);
 		
 	}
 }

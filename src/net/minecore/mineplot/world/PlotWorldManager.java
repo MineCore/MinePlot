@@ -12,16 +12,16 @@ public class PlotWorldManager {
 		worlds = new TreeMap<String, PlotWorld>();
 	}
 	
-	public void addPermitWorld(PlotWorld pw){
+	public void addPlotWorld(PlotWorld pw){
 		worlds.put(pw.getWorld().getName(), pw);
 	}
 	
-	public PlotWorld getPermitWorld(String name){
+	public PlotWorld getPlotWorld(String name){
 		return worlds.get(name);
 	}
 	
-	public PlotWorld getPermitWorld(World w) {
-		return getPermitWorld(w.getName());
+	public PlotWorld getPlotWorld(World w) {
+		return getPlotWorld(w.getName());
 	}
 
 	/**

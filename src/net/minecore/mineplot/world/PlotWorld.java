@@ -50,6 +50,11 @@ public class PlotWorld {
 		return plot;
 	}
 	
+	/**
+	 * Adds the given plot into the official records, first confirming that it is a valid plot.
+	 * @param p Plot to add
+	 * @return true if it was added, false otherwise.
+	 */
 	public boolean registerPlot(Plot p){
 		
 		if(!checkValidPlot(p))
@@ -95,7 +100,7 @@ public class PlotWorld {
 		return null;
 	}
 
-	public static PlotWorld getNewPermitWorld(ConfigurationSection cs, World world) {
+	public static PlotWorld getNewPlotWorld(ConfigurationSection cs, World world) {
 		cs.addDefault("max_plot_size", 60);
 		cs.addDefault("min_plot_size", 10);
 		cs.addDefault("max_plots_per_player", 5);
