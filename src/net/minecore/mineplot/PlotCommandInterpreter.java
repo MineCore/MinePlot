@@ -122,7 +122,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				return true;
 			}
 			
-			int cost = new1.calculateCost();
+			double cost = new1.calculateCost();
 			if(!mp.getMineCore().getEconomyManager().charge((Player)sender, cost)){
 				sender.sendMessage(ChatColor.DARK_RED + "You dont have enough money! Costs " +  cost);
 				return true;
