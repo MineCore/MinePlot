@@ -2,7 +2,8 @@ package net.minecore.mineplot;
 
 import java.util.ArrayList;
 
-import net.minecore.mineplot.miner.PlotPlayer;
+import net.minecore.mineplot.player.PlotPlayer;
+import net.minecore.mineplot.plot.InvalidPlotException;
 import net.minecore.mineplot.plot.Plot;
 import net.minecore.mineplot.world.PlotWorld;
 
@@ -103,10 +104,8 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				new1 = pw.getNewPlot(Integer.parseInt(loc1[0]), Integer.parseInt(loc1[1]), Integer.parseInt(loc2[0]), Integer.parseInt(loc2[1]));
 			} catch (NumberFormatException e){
 				return false;
-			}
-			
-			if(new1 == null){
-				sender.sendMessage(ChatColor.DARK_RED + "Plot invalid!");
+			} catch (InvalidPlotException e) {
+				sender.sendMessage(ChatColor.DARK_RED + "Plot invalid! " + e.getMessage());
 				return true;
 			}
 			
@@ -177,10 +176,8 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				new1 = pw.getNewPlot(Integer.parseInt(loc1[0]), Integer.parseInt(loc1[1]), Integer.parseInt(loc2[0]), Integer.parseInt(loc2[1]));
 			} catch (NumberFormatException e){
 				return false;
-			}
-			
-			if(new1 == null){
-				sender.sendMessage(ChatColor.DARK_RED + "Plot invalid!");
+			} catch (InvalidPlotException e) {
+				sender.sendMessage(ChatColor.DARK_RED + "Plot invalid! " + e.getMessage());
 				return true;
 			}
 			

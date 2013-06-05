@@ -7,8 +7,8 @@ import java.util.logging.Logger;
 import net.minecore.Metrics;
 import net.minecore.MineCore;
 import net.minecore.Miner;
-import net.minecore.mineplot.miner.PlotPlayer;
-import net.minecore.mineplot.miner.PlotPlayerManager;
+import net.minecore.mineplot.player.PlotPlayer;
+import net.minecore.mineplot.player.PlotPlayerManager;
 import net.minecore.mineplot.world.PlotWorld;
 import net.minecore.mineplot.world.PlotWorldManager;
 
@@ -30,23 +30,6 @@ public class MinePlot extends JavaPlugin {
 		
 		conf = this.getConfig();
 		conf.options().copyDefaults(true);
-		
-		ConfigurationSection worlds = conf.getConfigurationSection("worlds");
-		if(worlds == null)
-			worlds = conf.createSection("worlds");
-		
-		pwm = new PlotWorldManager();
-		
-		for(String s : worlds.getKeys(false)){
-			World w;
-			if((w = this.getServer().getWorld(s)) == null)
-				log.warning("Configuration values for world " + s + " can't be loaded because the world doesn't exist.");
-			else{
-				log.info("Loading world " + s);
-				pwm.addPlotWorld(PlotWorld.getNewPlotWorld(worlds.getConfigurationSection(s), w));
-			}
-		}
-		
 		saveConf();
 		
 		mm = new PlotPlayerManager(this);
@@ -68,6 +51,25 @@ public class MinePlot extends JavaPlugin {
 		log.info("Worlds saved");
 		
 		saveConf();
+	}
+	
+	private void loadWorlds(){
+		
+		ConfigurationSection worlds = conf.getConfigurationSection("worlds");
+		if(worlds == null)
+			worlds = conf.createSection("worlds");
+		
+		pwm = new PlotWorldManager();
+		
+		for(String s : worlds.getKeys(false)){
+			World w;
+			if((w = this.getServer().getWorld(s)) == null)
+				log.warning("Configuration values for world " + s + " can't be loaded because the world doesn't exist.");
+			else{
+				log.info("Loading world " + s);
+				pwm.addPlotWorld(PlotWorld.getNewPlotWorld(worlds.getConfigurationSection(s), w));
+			}
+		}
 	}
 	
 	public boolean initWorld(World w){
@@ -93,6 +95,10 @@ public class MinePlot extends JavaPlugin {
 	
 	@Override
 	public void onEnable(){
+		
+		loadWorlds();
+		
+		saveConf();
 		
 		getCommand("plot").setExecutor(new PlotCommandInterpreter(this));
 		
