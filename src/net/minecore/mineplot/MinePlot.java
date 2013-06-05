@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import net.minecore.Metrics;
 import net.minecore.MineCore;
 import net.minecore.Miner;
 import net.minecore.mineplot.miner.PlotPlayer;
@@ -96,6 +97,13 @@ public class MinePlot extends JavaPlugin {
 		getCommand("plot").setExecutor(new PlotCommandInterpreter(this));
 		
 		this.getServer().getPluginManager().registerEvents(new WorldListener(this), this);
+		
+		try {
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		log.info("Enabled!");
 		
