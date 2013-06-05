@@ -94,6 +94,11 @@ public class PlotWorld {
 		
 		plotBlockPrices.save(cs.getConfigurationSection("plot_block_prices"));
 		
+		
+		System.out.println("Saving world " + world.getName());
+		
+		
+		
 	}
 	
 	public Plot getContainingPlot(Location location) {
