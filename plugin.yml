@@ -27,11 +27,11 @@ permissions:
     mineplot.*:
         description: Gives access to all MinePlot commands
         children:
-            mineplot.admin: false
+            mineplot.admin: true
             mineplot.plot: true
     mineplot.admin:
         description: Allows player to use MinePlot admin commands
-        default: false
+        default: op
     mineplot.plot:
         description: Allows players to use all /plot commands
         default: true
