@@ -56,14 +56,18 @@ public class MinePlot extends JavaPlugin {
 	
 	@Override
 	public void onDisable(){
-		/*for(String name : pwm.getWorlds().keySet()){
-			log.info("Saving world " + name);
-			pwm.getPermitWorld(name).save(conf.getConfigurationSection("worlds." + name));
-		}*/
 		
 		for(PlotPlayer p : mm.getPlotPlayers())
 			if(!p.savePlots())
 				log.warning("Couldn't save data for player " + p.getName());
+	}
+	
+	public void save(){
+		
+		for(String name : pwm.getWorlds().keySet()){
+			log.info("Saving world " + name);
+			pwm.getPlotWorld(name).save(conf.getConfigurationSection("worlds." + name));
+		}
 		
 		log.info("Worlds saved");
 		
