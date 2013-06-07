@@ -1,9 +1,10 @@
-package net.minecore.mineplot.miner;
+package net.minecore.mineplot.player;
 
 import java.util.ArrayList;
 
 import net.minecore.Miner;
 import net.minecore.mineplot.MinePlot;
+import net.minecore.mineplot.plot.InvalidPlotException;
 import net.minecore.mineplot.plot.Plot;
 import net.minecore.mineplot.world.PlotWorld;
 
@@ -74,6 +75,7 @@ public class PlotPlayer{
 			cs.set("z1", p.getLocation1().getBlockZ());
 			cs.set("x2", p.getLocation2().getBlockX());
 			cs.set("z2", p.getLocation2().getBlockZ());
+			cs.set("allowed_players", p.getAllowedPlayers());
 		}
 		
 		return true;
@@ -90,7 +92,9 @@ public class PlotPlayer{
 				try {
 					loadPlotFromConf(s, plotConf.getConfigurationSection(s));
 				} catch(InvalidConfigurationException e){
-					mp.log.warning("Couldn't load plot " + s + ", " + e.getMessage());
+					mp.log.warning("Couldn't load plot " + s + ", error with configuration: " + e.getMessage());
+				} catch (InvalidPlotException e) {
+					mp.log.warning("Couldn't load plot " + s + ", bad plot:" + e.getMessage());
 				}
 		}
 		
@@ -98,7 +102,7 @@ public class PlotPlayer{
 		
 	}
 	
-	private void loadPlotFromConf(String name, ConfigurationSection cs) throws InvalidConfigurationException{
+	private void loadPlotFromConf(String name, ConfigurationSection cs) throws InvalidConfigurationException, InvalidPlotException{
 		
 		String world = cs.getString("world");
 		int x1 = cs.getInt("x1");
@@ -116,9 +120,6 @@ public class PlotPlayer{
 		
 		Plot p = pw.getNewPlot(x1, z1, x2, z2);
 		
-		if(p == null)
-			throw new InvalidConfigurationException("Plot invalid!");
-		
 		if(!pw.registerPlot(p))
 			throw new InvalidConfigurationException("Plot invalid! Error during registration.");
 		
@@ -126,6 +127,9 @@ public class PlotPlayer{
 		p.setOwner(m.getPlayerName());
 		
 		addPlot(p);
+		
+		for(String s : cs.getStringList("allowed_players"))
+			p.addPlayer(s);
 		
 	}
 }

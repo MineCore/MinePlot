@@ -3,6 +3,7 @@ package net.minecore.mineplot.world;
 import java.util.ArrayList;
 
 import net.minecore.mineplot.MinePlot;
+import net.minecore.mineplot.plot.InvalidPlotException;
 import net.minecore.mineplot.plot.Plot;
 
 import org.bukkit.Location;
@@ -39,13 +40,15 @@ public class PlotWorld {
 	 * @param x2 Second x coord
 	 * @param z2 Second z coord
 	 * @return The generated Plot or Null.
+	 * @throws InvalidPlotException If the plot is invalid
 	 */
-	public Plot getNewPlot(int x1, int z1, int x2, int z2){
+	public Plot getNewPlot(int x1, int z1, int x2, int z2) throws InvalidPlotException{
 		
 		Plot plot = new Plot(new Location(world, x1, 0, z1), new Location(world, x2, 0, z2), null, null, this);
 		
-		if(!checkValidPlot(plot))
-			return null;
+		String err;
+		if((err = checkValidPlot(plot)) != null)
+			throw new InvalidPlotException(err);
 		
 		return plot;
 	}
@@ -57,7 +60,7 @@ public class PlotWorld {
 	 */
 	public boolean registerPlot(Plot p){
 		
-		if(!checkValidPlot(p))
+		if(checkValidPlot(p) != null)
 			return false;
 		
 		plots.add(p);
@@ -65,19 +68,19 @@ public class PlotWorld {
 		return true;
 	}
 	
-	private boolean checkValidPlot(Plot p){
+	private String checkValidPlot(Plot p){
 		
 		if(Math.abs(p.getLocation1().getBlockX() - p.getLocation2().getBlockX()) < minPlotSize || Math.abs(p.getLocation1().getBlockX() - p.getLocation2().getBlockX()) > maxPlotSize || Math.abs(p.getLocation1().getBlockZ() - p.getLocation2().getBlockZ()) < minPlotSize || Math.abs(p.getLocation1().getBlockZ() - p.getLocation2().getBlockZ()) > maxPlotSize)
-			return false;
+			return "Plot too small or too big!";
 		
 		for(Plot plot : plots){
 			if(p.getLocation1().getBlockX() - p.getLocation2().getBlockX() < 2 * maxPlotSize + spacing &&
 					p.getLocation1().getBlockZ() - p.getLocation2().getBlockZ() < 2 * maxPlotSize + spacing)
 				if(p.intersects(plot, spacing))
-					return false;
+					return "Plot intersects other plot!";
 		}
 		
-		return true;
+		return null;
 	}
 	
 
@@ -90,6 +93,11 @@ public class PlotWorld {
 		cs.set("un_calculated_cost_per_block", uncalculatedCostPerBlock);
 		
 		plotBlockPrices.save(cs.getConfigurationSection("plot_block_prices"));
+		
+		
+		System.out.println("Saving world " + world.getName());
+		
+		
 		
 	}
 	

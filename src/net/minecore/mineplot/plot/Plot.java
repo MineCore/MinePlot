@@ -2,7 +2,6 @@ package net.minecore.mineplot.plot;
 
 import java.util.ArrayList;
 
-import net.minecore.mineplot.MinePlot;
 import net.minecore.mineplot.world.BlockPriceDefinition;
 import net.minecore.mineplot.world.PlotWorld;
 
@@ -162,13 +161,30 @@ public class Plot {
 		return name.equals(owner) || allowed_players.contains(name);
 	}
 	
+	/**
+	 * Gets the players that are allowed to use this plot, not including the
+	 * owner.
+	 * @return A List with all allowed players
+	 */
+	public ArrayList<String> getAllowedPlayers(){
+		return allowed_players;
+	}
 
 	/**
 	 * Puts a block at each of the four corners to mark this Plot.
 	 */
-	public void createCorners() {
-		location1.getWorld().getHighestBlockAt(location1).setType(Material.DIAMOND_BLOCK);
-		location2.getWorld().getHighestBlockAt(location2).setType(Material.DIAMOND_BLOCK);
+	public void createCorners(Material m) {
+		
+		int higherX = Math.max(location1.getBlockX(), location2.getBlockX());
+		int lowerX = Math.min(location1.getBlockX(), location2.getBlockX());
+		
+		int higherZ = Math.max(location1.getBlockZ(), location2.getBlockZ());
+		int lowerZ = Math.min(location1.getBlockZ(), location2.getBlockZ());
+		
+		location1.getWorld().getHighestBlockAt(higherX, higherZ).setType(m);
+		location1.getWorld().getHighestBlockAt(lowerX, higherZ).setType(m);
+		location1.getWorld().getHighestBlockAt(higherX, lowerZ).setType(m);
+		location1.getWorld().getHighestBlockAt(lowerX, lowerZ).setType(m);
 		
 	}
 	

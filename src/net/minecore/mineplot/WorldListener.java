@@ -1,6 +1,6 @@
 package net.minecore.mineplot;
 
-import net.minecore.mineplot.miner.PlotPlayer;
+import net.minecore.mineplot.player.PlotPlayer;
 import net.minecore.mineplot.plot.Plot;
 import net.minecore.mineplot.world.PlotWorld;
 

@@ -2,7 +2,7 @@ main: net.minecore.mineplot.MinePlot
 author: Numenorean95
 authors: [tcoan98]
 name: MinePlot
-version: 1.0.0
+version: 1.1
 load: POSTWORLD
 depend: [MineCore]
 
@@ -10,8 +10,30 @@ commands:
     plot:
         description: Deals with buying and managing plots.
         usage: |
-            /<command> list [world]
-            /<command> price <x>:<z> <x>:<z>
-            /<command> buy <x>:<z> <x>:<z> [name]
-            /<command> init <world>
+            /<command> list [world] - Lists all your plots and all the ones you have rights to use, or just the ones you own if you define a world.
+            /<command> price <x>:<z> <x>:<z> - Gives the price to buy the defined plot. Will not work if it does not meet the requirements to get a plot (e.g. too near another plot)
+            /<command> buy <x>:<z> <x>:<z> [name] - Buys the plot defined by the coordinates, optionally giving it the supplied name
+            /<command> <plot_name> - Gives standard info about the plot
+            /<command> <plot_name> <add|remove> <player_name> - Adds or removes a player from this plot's allowed list, which allows them to mine it, though not manage it.
+            /<command> <plot_name> allowed - Lists who is in the list of allowed players for the plot.
         permission: mineplot.plot
+    mineplot:
+        description: Admin commands for MinePlot
+        usage: |
+            /<command> init <world> - Initializes the world as a Plotted world, so that players must buy plots to mine and build
+        permission: mineplot.admin
+        
+permissions:
+    mineplot.*:
+        description: Gives access to all MinePlot commands
+        children:
+            mineplot.admin: true
+            mineplot.plot: true
+    mineplot.admin:
+        description: Allows player to use MinePlot admin commands
+        default: op
+    mineplot.plot:
+        description: Allows players to use all /plot commands
+        default: true
+    
+ 

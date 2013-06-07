@@ -1,6 +1,5 @@
-package net.minecore.mineplot.miner;
+package net.minecore.mineplot.player;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import net.minecore.mineplot.MinePlot;
@@ -27,7 +26,6 @@ public class PlotPlayerManager {
 		PlotPlayer m = new PlotPlayer(mineplot.getMineCore().getMiner(name), mineplot);
 		
 		miners.add(m);
-		m.loadPlots();
 		
 		return m;
 	}
