@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import net.minecore.Metrics;
 import net.minecore.MineCore;
-import net.minecore.Miner;
 import net.minecore.mineplot.player.PlotPlayer;
 import net.minecore.mineplot.player.PlotPlayerManager;
 import net.minecore.mineplot.world.PlotWorld;
@@ -100,7 +99,9 @@ public class MinePlot extends JavaPlugin {
 		
 		saveConf();
 		
+		
 		getCommand("plot").setExecutor(new PlotCommandInterpreter(this));
+		getCommand("mineplot").setExecutor(new CommandInterpreter(this));
 		
 		this.getServer().getPluginManager().registerEvents(new WorldListener(this), this);
 		

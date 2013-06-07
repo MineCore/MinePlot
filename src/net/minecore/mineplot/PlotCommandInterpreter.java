@@ -8,6 +8,7 @@ import net.minecore.mineplot.plot.Plot;
 import net.minecore.mineplot.world.PlotWorld;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,8 +25,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command,
-			String label, String[] args) {
+	public boolean onCommand(CommandSender sender, Command command,	String label, String[] args) {
 		
 		if(sender instanceof ConsoleCommandSender){
 			mp.log.info("Console cannot use the Plot command");
@@ -84,6 +84,8 @@ public class PlotCommandInterpreter implements CommandExecutor {
 		
 		if(args[0].equalsIgnoreCase("buy")){
 			
+			//if(sender.hasPermission("mineplot.buy"))
+			
 			if(args.length < 3)
 				return false;
 			
@@ -121,22 +123,15 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				return true;
 			}
 			
-			double cost = new1.calculateCost();
-			if(!mp.getMineCore().getEconomyManager().charge((Player)sender, cost)){
-				sender.sendMessage(ChatColor.DARK_RED + "You dont have enough money! Costs " +  cost);
-				return true;
-			}
-			
-			if(!pw.registerPlot(new1)){
-				sender.sendMessage(ChatColor.DARK_RED + "Couldn't buy plot!");
-				return true;
-			}
-			
-			
-			
-			if(args.length >= 4)
+			if(args.length >= 4){
+				
+				if(m.getPlot(args[3]) != null){
+					sender.sendMessage(ChatColor.DARK_RED + "You already own a plot by that name!");
+					return true;
+				}
+				
 				new1.setName(args[3]);
-			else {
+			} else {
 				String base = "Plot";
 				int num = 1;
 				while(m.getPlot(base + num) != null)
@@ -145,11 +140,23 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				new1.setName(base + num);
 			}
 			
+			double cost = new1.calculateCost();
+			if(!mp.getMineCore().getEconomyManager().charge((Player)sender, cost)){
+				sender.sendMessage(ChatColor.DARK_RED + "You dont have enough money! Costs " +  cost);
+				return true;
+			}
+			
+			if(!pw.registerPlot(new1)){
+				sender.sendMessage(ChatColor.DARK_RED + "Couldn't buy plot!");
+				mp.getMineCore().getEconomyManager().give((Player)sender, cost);
+				return true;
+			}
+			
 			sender.sendMessage(ChatColor.GOLD + "You have bought a new plot! It has been named " + new1.getName());
 			
 			m.addPlot(new1);
 			
-			new1.createCorners();
+			new1.createCorners(Material.FENCE);
 			
 			return true;
 			
@@ -185,67 +192,54 @@ public class PlotCommandInterpreter implements CommandExecutor {
 			
 			return true;
 		}
-		
-		if(args[0].equalsIgnoreCase("init")){
 
-
-			if(args.length < 2)
+		if(args.length > 0){
+			PlotPlayer m = mp.getPlotPlayerManager().getPlotPlayer(sender.getName());
+			Plot p = m.getPlot(args[0]);
+			
+			if(p == null)
 				return false;
-
-
-			World w = mp.getServer().getWorld(args[1]);
-
-
-			if(w == null){
-
-
-				if(sender instanceof ConsoleCommandSender)
-					mp.log.info("Invalid world!");
-				else 
-					sender.sendMessage(ChatColor.RED + "Invalid World!");
-
-
+			
+			if(args.length == 1){
+				sender.sendMessage(ChatColor.AQUA + p.toString());
 				return true;
 			}
-
-
-			if(mp.getPWM().getPlotWorld(w) != null){
-
-
-				if(sender instanceof ConsoleCommandSender)
-					mp.log.info("World already initialized!");
-				else 
-					sender.sendMessage(ChatColor.RED + "World already initialized!");
-
-
+			
+			if(args[1].equalsIgnoreCase("add")){
+				
+				if(args.length < 3)
+					return false;
+				
+				if(p.canUse(args[2])){
+					sender.sendMessage(ChatColor.YELLOW + "That person is already allowed!");
+					return true;
+				}
+				
+				p.addPlayer(args[2]);
+				sender.sendMessage(ChatColor.GREEN + "Added player " + args[2] + " to your plot " + p.getName() + "'s allowed list!");
 				return true;
 			}
-
-
-			if(mp.initWorld(w)){
-
-
-				if(sender instanceof ConsoleCommandSender)
-					mp.log.info("World initialized!");
-				else 
-					sender.sendMessage(ChatColor.GREEN + "World initialized!");
-			} else {
-
-
-				if(sender instanceof ConsoleCommandSender)
-					mp.log.info("Couldn't initialize world!");
-				else 
-					sender.sendMessage(ChatColor.RED + "Couldn't initialize world!");
+			
+			if(args[1].equalsIgnoreCase("remove")){
+				
+				if(args.length < 3)
+					return false;
+				
+				p.removePlayer(args[2]);
+				sender.sendMessage(ChatColor.DARK_GREEN + "Removed player " + args[2] + " from your plot " + p.getName() + "'s allowed list");
+				return true;
 			}
-
-
-			return true;
-
-
-
-
+			
+			if(args[1].equalsIgnoreCase("allowed")){
+				
+				
+				String tot = "Allowed: ";
+				for(String s : p.getAllowedPlayers())
+					tot = tot + ChatColor.GOLD + s + ChatColor.WHITE + ", ";
+				sender.sendMessage(tot);
+				return true;
+			}
 		}
-
 		
 		return false;
 	}

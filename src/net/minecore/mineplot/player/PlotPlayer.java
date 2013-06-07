@@ -75,6 +75,7 @@ public class PlotPlayer{
 			cs.set("z1", p.getLocation1().getBlockZ());
 			cs.set("x2", p.getLocation2().getBlockX());
 			cs.set("z2", p.getLocation2().getBlockZ());
+			cs.set("allowed_players", p.getAllowedPlayers());
 		}
 		
 		return true;
@@ -126,6 +127,9 @@ public class PlotPlayer{
 		p.setOwner(m.getPlayerName());
 		
 		addPlot(p);
+		
+		for(String s : cs.getStringList("allowed_players"))
+			p.addPlayer(s);
 		
 	}
 }

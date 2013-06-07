@@ -1,6 +1,5 @@
 package net.minecore.mineplot.player;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import net.minecore.mineplot.MinePlot;
