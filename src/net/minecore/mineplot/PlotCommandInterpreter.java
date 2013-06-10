@@ -232,12 +232,22 @@ public class PlotCommandInterpreter implements CommandExecutor {
 			
 			if(args[1].equalsIgnoreCase("allowed")){
 				
-				
 				String tot = "Allowed: ";
 				for(String s : p.getAllowedPlayers())
 					tot = tot + ChatColor.GOLD + s + ChatColor.WHITE + ", ";
 				sender.sendMessage(tot);
 				return true;
+			}
+			
+			if(args[1].equalsIgnoreCase("rename")){
+				
+				if(args.length < 3)
+					return false;
+				
+				p.setName(args[2]);
+				
+				sender.sendMessage(ChatColor.GREEN + "Plot renamed!");
+				
 			}
 		}
 		
