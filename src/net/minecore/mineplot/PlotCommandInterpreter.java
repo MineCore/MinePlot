@@ -247,6 +247,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				p.setName(args[2]);
 				
 				sender.sendMessage(ChatColor.GREEN + "Plot renamed!");
+				return true;
 				
 			}
 		}

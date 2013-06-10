@@ -2,7 +2,7 @@ main: net.minecore.mineplot.MinePlot
 author: Numenorean95
 authors: [tcoan98]
 name: MinePlot
-version: 1.1
+version: 1.1.1
 load: POSTWORLD
 depend: [MineCore]
 
@@ -16,6 +16,7 @@ commands:
             /<command> <plot_name> - Gives standard info about the plot
             /<command> <plot_name> <add|remove> <player_name> - Adds or removes a player from this plot's allowed list, which allows them to mine it, though not manage it.
             /<command> <plot_name> allowed - Lists who is in the list of allowed players for the plot.
+            /<command> <plot_name> rename <new_name> - Renames your plot
         permission: mineplot.plot
     mineplot:
         description: Admin commands for MinePlot

@@ -67,6 +67,9 @@ public class PlotPlayer{
 		if(m == null)
 			return false;
 		
+		for(String s : plotConf.getKeys(false))
+			plotConf.set(s, null);
+		
 		for(Plot p : plots){
 			plotConf.set(p.getName(), null);
 			ConfigurationSection cs = plotConf.createSection(p.getName());
