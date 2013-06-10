@@ -2,7 +2,6 @@ package net.minecore.mineplot.world;
 
 import java.util.ArrayList;
 
-import net.minecore.mineplot.MinePlot;
 import net.minecore.mineplot.plot.InvalidPlotException;
 import net.minecore.mineplot.plot.Plot;
 
@@ -12,13 +11,14 @@ import org.bukkit.configuration.ConfigurationSection;
 
 public class PlotWorld {
 	
-	private int maxPlotSize, minPlotSize, uncalculatedCostPerBlock, maxPlots, spacing;
+	private int maxPlotSize, minPlotSize, uncalculatedCostPerBlock, maxPlots, spacing, effectiveDepth;
 	private boolean calculatePlotCost;
 	private BlockPriceDefinition plotBlockPrices;
 	private World world;
 	private ArrayList<Plot> plots;
+	private boolean prevent_building;
 
-	public PlotWorld(World world, int maxPlotSize, int minPlotSize, boolean calculatePlotCost, int uncalculatedCostPerBlock, int maxPlots, int spacing, BlockPriceDefinition bpd) {
+	public PlotWorld(World world, int maxPlotSize, int minPlotSize, boolean calculatePlotCost, int uncalculatedCostPerBlock, int maxPlots, int spacing, BlockPriceDefinition bpd, int effectiveDepth, boolean prevent_building) {
 		this.maxPlotSize = maxPlotSize;
 		this.minPlotSize = minPlotSize;
 		this.calculatePlotCost = calculatePlotCost;
@@ -27,6 +27,8 @@ public class PlotWorld {
 		plotBlockPrices = bpd;
 		this.world =  world;
 		this.spacing = spacing;
+		this.setEffectiveDepth(effectiveDepth);
+		this.prevent_building = prevent_building;
 		
 		plots = new ArrayList<Plot>();
 	}
@@ -115,6 +117,8 @@ public class PlotWorld {
 		cs.addDefault("plot_spacing", 3);
 		cs.addDefault("calculate_plot_cost", true);
 		cs.addDefault("un_calculated_cost_per_block", 5);
+		cs.addDefault("effective_depth", 100);
+		cs.addDefault("prevent_building", true);
 		
 		ConfigurationSection blocks;
 		if((blocks = cs.getConfigurationSection("plot_block_prices")) == null)
@@ -127,7 +131,9 @@ public class PlotWorld {
 				cs.getBoolean("calculate_plot_cost"), 
 				cs.getInt("un_calculated_cost_per_block"),
 				cs.getInt("max_plots_per_player"),
-				cs.getInt("plot_spacing"), bpd);
+				cs.getInt("plot_spacing"), bpd,
+				cs.getInt("effective_depth"),
+				cs.getBoolean("prevent_building"));
 		
 		return pw;
 	}
@@ -234,6 +240,24 @@ public class PlotWorld {
 
 	public ArrayList<Plot> getPlots() {
 		return plots;
+	}
+
+	/**
+	 * @return the effectiveDepth
+	 */
+	public int getEffectiveDepth() {
+		return effectiveDepth;
+	}
+
+	/**
+	 * @param effectiveDepth the effectiveDepth to set
+	 */
+	public void setEffectiveDepth(int effectiveDepth) {
+		this.effectiveDepth = effectiveDepth;
+	}
+
+	public boolean preventBuilding() {
+		return prevent_building;
 	}
 
 

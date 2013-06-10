@@ -293,7 +293,7 @@ public class Plot {
 	
 	@Override
 	public String toString(){
-		return "Plot " + getName() + " in world " + location1.getWorld().getName() + " at coords (" + 
+		return "Plot " + getName() + " in " + location1.getWorld().getName() + " at coords (" + 
 				getLocation1().getBlockX() + "," + getLocation1().getBlockZ() + ") (" + getLocation2().getBlockX() + "," + getLocation2().getBlockZ() + ")";
 	}
 
