@@ -139,8 +139,6 @@ public class PlotCommandInterpreter implements CommandExecutor {
 
 					new1.setName(args[1]);
 				}
-				
-				return false;
 
 			} else {
 
@@ -217,6 +215,8 @@ public class PlotCommandInterpreter implements CommandExecutor {
 					+ new1.getName());
 
 			m.addPlot(new1);
+			
+			pps.clear(sender.getName());
 
 			new1.createCorners(Material.FENCE);
 

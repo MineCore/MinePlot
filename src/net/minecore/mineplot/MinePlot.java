@@ -32,7 +32,7 @@ public class MinePlot extends JavaPlugin {
 		conf.options().copyDefaults(true);
 		saveConf();
 		
-		conf.addDefault("tool", 207);
+		conf.addDefault("tool", 281);
 		
 		mm = new PlotPlayerManager(this);
 		
@@ -141,5 +141,9 @@ public class MinePlot extends JavaPlugin {
 
 	public MineCore getMineCore() {
 		return ((MineCore)getServer().getPluginManager().getPlugin("MineCore"));
+	}
+	
+	public int getSelectionTool(){
+		return pps.getTool();
 	}
 }

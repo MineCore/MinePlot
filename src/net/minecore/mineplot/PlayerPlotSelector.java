@@ -53,5 +53,18 @@ public class PlayerPlotSelector implements Listener {
 	public Location getPlayerLocation2(Player p){
 		return getPlayerLocation2(p.getName());
 	}
+	
+	public int getTool() {
+		return tool;
+	}
+
+	public void clear(String name) {
+		location1.remove(name);
+		location2.remove(name);
+	}
+	
+	public void clear(Player p){
+		clear(p.getName());
+	}
 
 }
