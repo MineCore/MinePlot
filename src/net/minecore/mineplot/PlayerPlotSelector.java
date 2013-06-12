@@ -38,31 +38,63 @@ public class PlayerPlotSelector implements Listener {
 		}
 	}
 	
+	/**
+	 * Gets the first selected location for a player.
+	 * @param name Name of player to get the first location for
+	 * @return The location or null if it hasn't been selected.
+	 */
 	public Location getPlayerLocation1(String name){
 		return location1.get(name);
 	}
 	
+	/**
+	 * Gets the first selected location for a player.
+	 * @param p Player to get the location for
+	 * @return The location or null if it hasn't been selected.
+	 */
 	public Location getPlayerLocation1(Player p){
 		return getPlayerLocation1(p.getName());
 	}
 	
+	/**
+	 * Gets the second selected location for a player.
+	 * @param name Name of player to get the first location for
+	 * @return The location or null if it hasn't been selected.
+	 */
 	public Location getPlayerLocation2(String name){
 		return location2.get(name);
 	}
 	
+	/**
+	 * Gets the second selected location for a player.
+	 * @param p Player to get the location for
+	 * @return The location or null if it hasn't been selected.
+	 */
 	public Location getPlayerLocation2(Player p){
 		return getPlayerLocation2(p.getName());
 	}
 	
+	/**
+	 * Gets the tool used to select an area.
+	 * @return The ID of the item
+	 */
 	public int getTool() {
 		return tool;
 	}
 
+	/**
+	 * Removs all selections forr the supplied player
+	 * @param name Name of player to clear
+	 */
 	public void clear(String name) {
 		location1.remove(name);
 		location2.remove(name);
 	}
 	
+	/**
+	 * Removs all selections forr the supplied player
+	 * @param name Player to clear
+	 */
 	public void clear(Player p){
 		clear(p.getName());
 	}
