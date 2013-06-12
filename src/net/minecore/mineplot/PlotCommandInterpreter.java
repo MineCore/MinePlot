@@ -289,69 +289,72 @@ public class PlotCommandInterpreter implements CommandExecutor {
 
 			return true;
 		}
+		
+		if(args[0].equalsIgnoreCase("tool")){
+			sender.sendMessage("The tool is a " + Material.getMaterial(mp.getSelectionTool()));
+			return true;
+		}
 
-		if (args.length > 0) {
-			PlotPlayer m = mp.getPlotPlayerManager().getPlotPlayer(
-					sender.getName());
-			Plot p = m.getPlot(args[0]);
+		PlotPlayer m = mp.getPlotPlayerManager()
+				.getPlotPlayer(sender.getName());
+		Plot p = m.getPlot(args[0]);
 
-			if (p == null)
+		if (p == null)
+			return false;
+
+		if (args.length == 1) {
+			sender.sendMessage(ChatColor.AQUA + p.toString());
+			return true;
+		}
+
+		if (args[1].equalsIgnoreCase("add")) {
+
+			if (args.length < 3)
 				return false;
 
-			if (args.length == 1) {
-				sender.sendMessage(ChatColor.AQUA + p.toString());
+			if (p.canUse(args[2])) {
+				sender.sendMessage(ChatColor.YELLOW
+						+ "That person is already allowed!");
 				return true;
 			}
 
-			if (args[1].equalsIgnoreCase("add")) {
+			p.addPlayer(args[2]);
+			sender.sendMessage(ChatColor.GREEN + "Added player " + args[2]
+					+ " to your plot " + p.getName() + "'s allowed list!");
+			return true;
+		}
 
-				if (args.length < 3)
-					return false;
+		if (args[1].equalsIgnoreCase("remove")) {
 
-				if (p.canUse(args[2])) {
-					sender.sendMessage(ChatColor.YELLOW
-							+ "That person is already allowed!");
-					return true;
-				}
+			if (args.length < 3)
+				return false;
 
-				p.addPlayer(args[2]);
-				sender.sendMessage(ChatColor.GREEN + "Added player " + args[2]
-						+ " to your plot " + p.getName() + "'s allowed list!");
-				return true;
-			}
+			p.removePlayer(args[2]);
+			sender.sendMessage(ChatColor.DARK_GREEN + "Removed player "
+					+ args[2] + " from your plot " + p.getName()
+					+ "'s allowed list");
+			return true;
+		}
 
-			if (args[1].equalsIgnoreCase("remove")) {
+		if (args[1].equalsIgnoreCase("allowed")) {
 
-				if (args.length < 3)
-					return false;
+			String tot = "Allowed: ";
+			for (String s : p.getAllowedPlayers())
+				tot = tot + ChatColor.GOLD + s + ChatColor.WHITE + ", ";
+			sender.sendMessage(tot);
+			return true;
+		}
 
-				p.removePlayer(args[2]);
-				sender.sendMessage(ChatColor.DARK_GREEN + "Removed player "
-						+ args[2] + " from your plot " + p.getName()
-						+ "'s allowed list");
-				return true;
-			}
+		if (args[1].equalsIgnoreCase("rename")) {
 
-			if (args[1].equalsIgnoreCase("allowed")) {
+			if (args.length < 3)
+				return false;
 
-				String tot = "Allowed: ";
-				for (String s : p.getAllowedPlayers())
-					tot = tot + ChatColor.GOLD + s + ChatColor.WHITE + ", ";
-				sender.sendMessage(tot);
-				return true;
-			}
+			p.setName(args[2]);
 
-			if (args[1].equalsIgnoreCase("rename")) {
+			sender.sendMessage(ChatColor.GREEN + "Plot renamed!");
+			return true;
 
-				if (args.length < 3)
-					return false;
-
-				p.setName(args[2]);
-
-				sender.sendMessage(ChatColor.GREEN + "Plot renamed!");
-				return true;
-
-			}
 		}
 
 		return false;

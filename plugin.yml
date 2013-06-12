@@ -10,14 +10,15 @@ commands:
     plot:
         description: Deals with buying and managing plots.
         usage: |
-            /<command> list [world] - Lists all your plots and all the ones you have rights to use, or just the ones you own if you define a world.
+            /<command> list [world] - Lists all the plots you own (green) and you have rights to use (yellow)
+            /<command> tool - Gets the tool for defining plots
             /<command> price - Gets the price of the currently selected plot
-            /<command> price <x>:<z> <x>:<z> - Gives the price to buy the defined plot. Will not work if it does not meet the requirements to get a plot (e.g. too near another plot)
-            /<command> buy [name] - Buys the currently selected Plot, with the optional name.
-            /<command> buy <x>:<z> <x>:<z> [name] - Buys the plot defined by the coordinates, optionally giving it the supplied name
+            /<command> price <x>:<z> <x>:<z> - Gets the price for the defined plot
+            /<command> buy [name] - Buys the currently selected Plot, with the optional name
+            /<command> buy <x>:<z> <x>:<z> [name] - Buys the plot defined by the coordinates
             /<command> <plot_name> - Gives standard info about the plot
-            /<command> <plot_name> <add|remove> <player_name> - Adds or removes a player from this plot's allowed list, which allows them to mine it, though not manage it.
-            /<command> <plot_name> allowed - Lists who is in the list of allowed players for the plot.
+            /<command> <plot_name> <add|remove> <player_name> - Adds or removes a player from this plot's allowed list
+            /<command> <plot_name> allowed - Lists who is in the list of allowed players for the plot
             /<command> <plot_name> rename <new_name> - Renames your plot
         permission: mineplot.plot
     mineplot:
