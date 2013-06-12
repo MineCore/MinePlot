@@ -22,6 +22,7 @@ public class MinePlot extends JavaPlugin {
 	private FileConfiguration conf;
 	private PlotWorldManager pwm;
 	private PlotPlayerManager mm;
+	private PlayerPlotSelector pps;
 	
 	@Override
 	public void onLoad(){
@@ -31,7 +32,11 @@ public class MinePlot extends JavaPlugin {
 		conf.options().copyDefaults(true);
 		saveConf();
 		
+		conf.addDefault("tool", 207);
+		
 		mm = new PlotPlayerManager(this);
+		
+		pps = new PlayerPlotSelector(conf.getInt("tool"));
 		
 		log.info("Loaded!");
 	}
@@ -104,10 +109,12 @@ public class MinePlot extends JavaPlugin {
 		saveConf();
 		
 		
-		getCommand("plot").setExecutor(new PlotCommandInterpreter(this));
+		getCommand("plot").setExecutor(new PlotCommandInterpreter(pps, this));
 		getCommand("mineplot").setExecutor(new CommandInterpreter(this));
 		
-		this.getServer().getPluginManager().registerEvents(new WorldListener(this), this);
+		
+		getServer().getPluginManager().registerEvents(new WorldListener(this), this);
+		getServer().getPluginManager().registerEvents(pps, this);
 		
 		try {
 			Metrics metrics = new Metrics(this);

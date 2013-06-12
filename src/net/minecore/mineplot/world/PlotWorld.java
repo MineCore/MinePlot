@@ -1,5 +1,6 @@
 package net.minecore.mineplot.world;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import net.minecore.mineplot.plot.InvalidPlotException;
@@ -46,7 +47,18 @@ public class PlotWorld {
 	 */
 	public Plot getNewPlot(int x1, int z1, int x2, int z2) throws InvalidPlotException{
 		
-		Plot plot = new Plot(new Location(world, x1, 0, z1), new Location(world, x2, 0, z2), null, null, this);
+		Location l1 = new Location(world, x1, 0, z1), l2 =  new Location(world, x2, 0, z2);
+		
+		return getNewPlot(l1, l2);
+	}
+	
+
+	public Plot getNewPlot(Location l1, Location l2) throws InvalidPlotException {
+		
+		if(!l1.getWorld().equals(world) || !l2.getWorld().equals(world))
+			throw new InvalidParameterException("Locations must be in this world!");
+		
+		Plot plot = new Plot(l1, l2, null, null, this);
 		
 		String err;
 		if((err = checkValidPlot(plot)) != null)
