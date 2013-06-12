@@ -98,28 +98,30 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				sender.sendMessage("This world does not allow you to buy plots!");
 				return true;
 			}
-			
+
 			PlotPlayer m = mp.getPlotPlayerManager().getPlotPlayer(
 					sender.getName());
-			
+
 			Plot new1;
 
 			if (args.length < 3) {
-				
-				Location l1 = pps.getPlayerLocation1(sender.getName()),
-						l2 = pps.getPlayerLocation2(sender.getName());
-				
-				if(l1 == null){
-					sender.sendMessage(ChatColor.RED + "You haven't set your first location yet!");
+
+				Location l1 = pps.getPlayerLocation1(sender.getName()), l2 = pps
+						.getPlayerLocation2(sender.getName());
+
+				if (l1 == null) {
+					sender.sendMessage(ChatColor.RED
+							+ "You haven't set your first location yet!");
 					return true;
 				}
-				
-				if(l2 == null){
-					sender.sendMessage(ChatColor.RED + "You haven't set your second location yet!");
+
+				if (l2 == null) {
+					sender.sendMessage(ChatColor.RED
+							+ "You haven't set your second location yet!");
 					return true;
 				}
-				
-				//Get Plot
+
+				// Get Plot
 				try {
 					new1 = pw.getNewPlot(l1, l2);
 				} catch (InvalidPlotException e) {
@@ -127,8 +129,8 @@ public class PlotCommandInterpreter implements CommandExecutor {
 							+ e.getMessage());
 					return true;
 				}
-				
-				//Set name
+
+				// Set name
 				if (args.length == 2) {
 
 					if (m.getPlot(args[1]) != null) {
@@ -159,7 +161,6 @@ public class PlotCommandInterpreter implements CommandExecutor {
 							+ e.getMessage());
 					return true;
 				}
-				
 
 				if (args.length >= 4) {
 
@@ -172,8 +173,6 @@ public class PlotCommandInterpreter implements CommandExecutor {
 					new1.setName(args[3]);
 				}
 			}
-
-			
 
 			int numPlots = 0;
 			for (Plot p : m.getPlots())
@@ -200,8 +199,8 @@ public class PlotCommandInterpreter implements CommandExecutor {
 						.give((Player) sender, cost);
 				return true;
 			}
-			
-			if(new1.getName() == null){
+
+			if (new1.getName() == null) {
 				String base = "Plot";
 				int num = 1;
 				while (m.getPlot(base + num) != null)
@@ -215,7 +214,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 					+ new1.getName());
 
 			m.addPlot(new1);
-			
+
 			pps.clear(sender.getName());
 
 			new1.createCorners(Material.FENCE);
@@ -225,8 +224,6 @@ public class PlotCommandInterpreter implements CommandExecutor {
 		}
 
 		if (args[0].equalsIgnoreCase("price")) {
-			if (args.length < 3)
-				return false;
 
 			PlotWorld pw = mp.getPWM().getPlotWorld(
 					mp.getServer().getPlayer(sender.getName()).getLocation()
@@ -237,22 +234,54 @@ public class PlotCommandInterpreter implements CommandExecutor {
 				return true;
 			}
 
-			String[] loc1 = args[1].split(":"), loc2 = args[2].split(":");
-
-			if (loc1.length < 2 || loc2.length < 2)
-				return false;
-
 			Plot new1;
-			try {
-				new1 = pw.getNewPlot(Integer.parseInt(loc1[0]),
-						Integer.parseInt(loc1[1]), Integer.parseInt(loc2[0]),
-						Integer.parseInt(loc2[1]));
-			} catch (NumberFormatException e) {
-				return false;
-			} catch (InvalidPlotException e) {
-				sender.sendMessage(ChatColor.DARK_RED + "Plot invalid! "
-						+ e.getMessage());
-				return true;
+
+			if (args.length < 2) {
+
+				Location l1 = pps.getPlayerLocation1(sender.getName()), l2 = pps
+						.getPlayerLocation2(sender.getName());
+
+				if (l1 == null) {
+					sender.sendMessage(ChatColor.RED
+							+ "You haven't set your first location yet!");
+					return true;
+				}
+
+				if (l2 == null) {
+					sender.sendMessage(ChatColor.RED
+							+ "You haven't set your second location yet!");
+					return true;
+				}
+
+				// Get Plot
+				try {
+					new1 = pw.getNewPlot(l1, l2);
+				} catch (InvalidPlotException e) {
+					sender.sendMessage(ChatColor.DARK_RED + "Plot invalid! "
+							+ e.getMessage());
+					return true;
+				}
+
+			} else {
+
+				String[] loc1 = args[1].split(":"), loc2 = args[2].split(":");
+
+				if (loc1.length < 2 || loc2.length < 2)
+					return false;
+
+				try {
+					new1 = pw.getNewPlot(Integer.parseInt(loc1[0]),
+							Integer.parseInt(loc1[1]),
+							Integer.parseInt(loc2[0]),
+							Integer.parseInt(loc2[1]));
+				} catch (NumberFormatException e) {
+					return false;
+				} catch (InvalidPlotException e) {
+					sender.sendMessage(ChatColor.DARK_RED + "Plot invalid! "
+							+ e.getMessage());
+					return true;
+				}
+
 			}
 
 			sender.sendMessage(ChatColor.GOLD

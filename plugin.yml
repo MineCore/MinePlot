@@ -11,7 +11,9 @@ commands:
         description: Deals with buying and managing plots.
         usage: |
             /<command> list [world] - Lists all your plots and all the ones you have rights to use, or just the ones you own if you define a world.
+            /<command> price - Gets the price of the currently selected plot
             /<command> price <x>:<z> <x>:<z> - Gives the price to buy the defined plot. Will not work if it does not meet the requirements to get a plot (e.g. too near another plot)
+            /<command> buy [name] - Buys the currently selected Plot, with the optional name.
             /<command> buy <x>:<z> <x>:<z> [name] - Buys the plot defined by the coordinates, optionally giving it the supplied name
             /<command> <plot_name> - Gives standard info about the plot
             /<command> <plot_name> <add|remove> <player_name> - Adds or removes a player from this plot's allowed list, which allows them to mine it, though not manage it.
