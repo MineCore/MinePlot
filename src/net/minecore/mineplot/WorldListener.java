@@ -28,6 +28,8 @@ public class WorldListener implements Listener {
 		if(pw.getEffectiveDepth() < e.getBlock().getLocation().getBlockY())
 			return;
 		
+		mp.getPlotPlayerManager().getPlotPlayer(e.getPlayer());
+		
 		Plot plot = pw.getContainingPlot(e.getBlock().getLocation());
 		
 		if(plot == null){
@@ -37,7 +39,7 @@ public class WorldListener implements Listener {
 		}
 		
 		if(!plot.canUse(e.getPlayer())){
-			e.getPlayer().sendMessage(ChatColor.RED + "Sorry! You cannot mine here, this plot is owned by someone else. If you would like to use it, they can give you permission.");
+			e.getPlayer().sendMessage(ChatColor.RED + "Sorry! You cannot mine here, this plot is owned by " + ChatColor.YELLOW + plot.getOwner() + ChatColor.RED + ". If you would like to use it, they can give you permission.");
 			e.setCancelled(true);
 			return;
 		}

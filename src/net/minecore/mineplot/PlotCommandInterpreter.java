@@ -360,6 +360,17 @@ public class PlotCommandInterpreter implements CommandExecutor {
 
 		}
 		
+		if (args[1].equalsIgnoreCase("destroy")) {
+
+			m.removePlot(p);
+			mp.getPWM().getPlotWorld(p.getLocation1().getWorld()).removePlot(p);
+			
+			
+			sender.sendMessage(ChatColor.DARK_GRAY + "Plot destroyed!");
+			return true;
+
+		}
+		
 		if (args[1].equalsIgnoreCase("sell")) {
 			
 			Block b = p.getLocation1().getWorld().getHighestBlockAt(p.getLocation1());

@@ -129,7 +129,7 @@ public class PlotWorld {
 		cs.addDefault("plot_spacing", 3);
 		cs.addDefault("calculate_plot_cost", true);
 		cs.addDefault("un_calculated_cost_per_block", 5);
-		cs.addDefault("effective_depth", 100);
+		cs.addDefault("effective_depth", 64);
 		cs.addDefault("prevent_building", true);
 		
 		ConfigurationSection blocks;
@@ -270,6 +270,10 @@ public class PlotWorld {
 
 	public boolean preventBuilding() {
 		return prevent_building;
+	}
+
+	public void removePlot(Plot p) {
+		plots.remove(p);
 	}
 
 
