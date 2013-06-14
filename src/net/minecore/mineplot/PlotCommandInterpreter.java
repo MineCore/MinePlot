@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import net.minecore.mineplot.player.PlotPlayer;
 import net.minecore.mineplot.plot.InvalidPlotException;
 import net.minecore.mineplot.plot.Plot;
+import net.minecore.mineplot.plot.PlotSeller;
 import net.minecore.mineplot.world.PlotWorld;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,8 +22,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 
 	private MinePlot mp;
 	private PlayerPlotSelector pps;
-
-	public PlotCommandInterpreter(PlayerPlotSelector pps, MinePlot minePermit) {
+	public PlotCommandInterpreter(PlayerPlotSelector pps, PlotSeller plotSeller, MinePlot minePermit) {
 		this.mp = minePermit;
 		this.pps = pps;
 	}
@@ -367,20 +365,6 @@ public class PlotCommandInterpreter implements CommandExecutor {
 			
 			
 			sender.sendMessage(ChatColor.DARK_GRAY + "Plot destroyed!");
-			return true;
-
-		}
-		
-		if (args[1].equalsIgnoreCase("sell")) {
-			
-			Block b = p.getLocation1().getWorld().getHighestBlockAt(p.getLocation1());
-			b.setType(Material.SIGN_POST);
-			Sign sign = (Sign) b.getState().getData();
-			sign.setLine(0, "Right click if");
-			sign.setLine(1, "you want to buy");
-			sign.setLine(2, "this plot");
-
-			sender.sendMessage(ChatColor.YELLOW + "Selling Plot!");
 			return true;
 
 		}

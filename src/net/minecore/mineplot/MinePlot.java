@@ -8,6 +8,7 @@ import net.minecore.Metrics;
 import net.minecore.MineCore;
 import net.minecore.mineplot.player.PlotPlayer;
 import net.minecore.mineplot.player.PlotPlayerManager;
+import net.minecore.mineplot.plot.PlotSeller;
 import net.minecore.mineplot.world.PlotWorld;
 import net.minecore.mineplot.world.PlotWorldManager;
 
@@ -23,6 +24,7 @@ public class MinePlot extends JavaPlugin {
 	private PlotWorldManager pwm;
 	private PlotPlayerManager mm;
 	private PlayerPlotSelector pps;
+	private PlotSeller plotSeller;
 	
 	@Override
 	public void onLoad(){
@@ -37,6 +39,7 @@ public class MinePlot extends JavaPlugin {
 		mm = new PlotPlayerManager(this);
 		
 		pps = new PlayerPlotSelector(conf.getInt("tool"));
+		plotSeller = new PlotSeller(this);
 		
 		log.info("Loaded!");
 	}
@@ -109,12 +112,13 @@ public class MinePlot extends JavaPlugin {
 		saveConf();
 		
 		
-		getCommand("plot").setExecutor(new PlotCommandInterpreter(pps, this));
+		getCommand("plot").setExecutor(new PlotCommandInterpreter(pps, plotSeller, this));
 		getCommand("mineplot").setExecutor(new CommandInterpreter(this));
 		
 		
 		getServer().getPluginManager().registerEvents(new WorldListener(this), this);
 		getServer().getPluginManager().registerEvents(pps, this);
+		getServer().getPluginManager().registerEvents(plotSeller, this);
 		
 		try {
 			Metrics metrics = new Metrics(this);
@@ -145,5 +149,9 @@ public class MinePlot extends JavaPlugin {
 	
 	public int getSelectionTool(){
 		return pps.getTool();
+	}
+	
+	public PlotSeller getPlotSeller(){
+		return plotSeller;
 	}
 }

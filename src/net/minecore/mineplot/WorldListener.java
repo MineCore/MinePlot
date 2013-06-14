@@ -61,6 +61,8 @@ public class WorldListener implements Listener {
 		if(pw.getEffectiveDepth() < e.getBlock().getLocation().getBlockY())
 			return;
 		
+		mp.getPlotPlayerManager().getPlotPlayer(e.getPlayer());
+		
 		Plot plot = pw.getContainingPlot(e.getBlock().getLocation());
 		
 		if(plot == null){

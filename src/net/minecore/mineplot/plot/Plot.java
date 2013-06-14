@@ -19,6 +19,8 @@ public class Plot {
 	private ArrayList<String> allowed_players;
 	private String name;
 	private PlotWorld pw;
+	private int sellPrice;
+	private Location sellSign;
 
 	public Plot(Location location1, Location location2, String owner, String name, PlotWorld permitWorld) {
 		if(location1 == null || location2 == null)
@@ -36,6 +38,7 @@ public class Plot {
 		this.owner = owner;
 		this.name = name;
 		this.pw = permitWorld;
+		sellPrice = -1;
 		
 		allowed_players = new ArrayList<String>();
 	}
@@ -224,6 +227,17 @@ public class Plot {
 			return pw.getUncalculatedCostPerBlock() * Math.abs((location1.getBlockX() - location2.getBlockX()) * (location1.getBlockZ() - location2.getBlockZ()));
 		}
 	}
+	
+	/**
+	 * Declares this plot up for sale with the given price.
+	 * @param price Price to sell with
+	 * @param sign The sign to use to buy the plot.
+	 */
+	public void sell(int price, Location sign){
+		
+		sellPrice = price;
+		sellSign = sign;
+	}
 
 	@Override
 	public boolean equals(Object o){
@@ -289,6 +303,39 @@ public class Plot {
 	 */
 	public void setName(String name){
 		this.name = name;
+	}
+	
+	/**
+	 * Returns whether this plot is up forr sale
+	 * @return True if it is
+	 */
+	public boolean isBeingSold(){
+		return sellPrice != -1;
+	}
+	
+	/**
+	 * Gets the price this plot is being sold for, or -1 if it is not for sale.
+	 * @return The price
+	 */
+	public int getSellPrice(){
+		return sellPrice;
+	}
+	
+	/**
+	 * Gets the location of the sign that players can right click to buy this plot.
+	 * @return The location
+	 */
+	public Location getSellSignLocation(){
+		return sellSign;
+	}
+	
+	/**
+	 * Gives this plot the status of sold, so it cannot be bought again until sell() is
+	 * called again
+	 */
+	public void setSold(){
+		sellPrice = -1;
+		sellSign = null;
 	}
 	
 	@Override
