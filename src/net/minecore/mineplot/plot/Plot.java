@@ -1,5 +1,6 @@
 package net.minecore.mineplot.plot;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import net.minecore.mineplot.world.BlockPriceDefinition;
@@ -235,7 +236,13 @@ public class Plot {
 	 */
 	public void sell(int price, Location sign){
 		
-		sellPrice = price;
+		if(sign == null)
+			throw new InvalidParameterException("Sign location cannot be null!");
+		
+		if(!contains(sign))
+			throw new InvalidParameterException("Sign location is not within this plot!");
+		
+		sellPrice = Math.abs(price);
 		sellSign = sign;
 	}
 

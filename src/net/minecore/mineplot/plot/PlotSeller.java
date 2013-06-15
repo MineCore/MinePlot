@@ -65,7 +65,7 @@ public class PlotSeller implements Listener {
 		e.setLine(3, "Click to buy!");
 		
 		if(plot.isBeingSold())
-			e.getPlayer().getWorld().getBlockAt(plot.getSellSignLocation()).setType(Material.AIR);
+			e.getPlayer().getWorld().getBlockAt(plot.getSellSignLocation()).setType(Material.DIAMOND_BLOCK);
 		
 		sell(plot, price, e.getBlock().getLocation());
 		
@@ -87,6 +87,7 @@ public class PlotSeller implements Listener {
 		if(pw == null)
 			return;
 		
+		mp.getPlotPlayerManager().getPlotPlayer(e.getPlayer());
 		Plot p = pw.getContainingPlot(e.getClickedBlock().getLocation());
 		
 		if(p == null)

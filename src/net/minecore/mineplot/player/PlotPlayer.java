@@ -1,5 +1,6 @@
 package net.minecore.mineplot.player;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 import net.minecore.Miner;
@@ -8,6 +9,7 @@ import net.minecore.mineplot.plot.InvalidPlotException;
 import net.minecore.mineplot.plot.Plot;
 import net.minecore.mineplot.world.PlotWorld;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 
@@ -79,6 +81,17 @@ public class PlotPlayer{
 			cs.set("x2", p.getLocation2().getBlockX());
 			cs.set("z2", p.getLocation2().getBlockZ());
 			cs.set("allowed_players", p.getAllowedPlayers());
+			
+			cs.set("sellSign", null);
+			cs.set("sell_price", p.getSellPrice());
+			
+			if(p.isBeingSold()){
+				ConfigurationSection sell = cs.createSection("sellSign");
+				sell.set("x", p.getSellSignLocation().getBlockX());
+				sell.set("y", p.getSellSignLocation().getBlockY());
+				sell.set("z", p.getSellSignLocation().getBlockZ());
+			}
+			
 		}
 		
 		return true;
@@ -134,5 +147,28 @@ public class PlotPlayer{
 		for(String s : cs.getStringList("allowed_players"))
 			p.addPlayer(s);
 		
+		System.out.println(cs.getInt("sell_price"));
+		ConfigurationSection sign = cs.getConfigurationSection("sellSign");
+		
+		System.out.println(sign);
+		
+		if(sign == null || !sign.contains("x") || !sign.contains("y") || !sign.contains("z"))
+			cs.set("sell_price", -1);
+		
+		System.out.println(cs.getInt("sell_price"));
+		if(cs.getInt("sell_price") != -1){
+			
+			int x = sign.getInt("x");
+			int y = sign.getInt("y");
+			int z = sign.getInt("z");
+			System.out.println(x + " " + y + " " + z);
+			try {
+				p.sell(cs.getInt("sell_price"), new Location(mp.getServer().getWorld(world), x, y, z));
+			} catch (InvalidParameterException e){
+				throw new InvalidConfigurationException(e.getMessage());
+			}
+			
+			
+		}
 	}
 }
