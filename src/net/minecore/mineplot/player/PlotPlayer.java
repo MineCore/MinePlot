@@ -147,21 +147,17 @@ public class PlotPlayer{
 		for(String s : cs.getStringList("allowed_players"))
 			p.addPlayer(s);
 		
-		System.out.println(cs.getInt("sell_price"));
 		ConfigurationSection sign = cs.getConfigurationSection("sellSign");
-		
-		System.out.println(sign);
 		
 		if(sign == null || !sign.contains("x") || !sign.contains("y") || !sign.contains("z"))
 			cs.set("sell_price", -1);
 		
-		System.out.println(cs.getInt("sell_price"));
 		if(cs.getInt("sell_price") != -1){
 			
 			int x = sign.getInt("x");
 			int y = sign.getInt("y");
 			int z = sign.getInt("z");
-			System.out.println(x + " " + y + " " + z);
+			
 			try {
 				p.sell(cs.getInt("sell_price"), new Location(mp.getServer().getWorld(world), x, y, z));
 			} catch (InvalidParameterException e){
