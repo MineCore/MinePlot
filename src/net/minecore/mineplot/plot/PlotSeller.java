@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -24,6 +25,36 @@ public class PlotSeller implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	public void onBlockBreak(BlockBreakEvent e){
+		if(!e.getBlock().getType().equals(Material.WALL_SIGN) && !e.getBlock().getType().equals(Material.SIGN_POST))
+			return;
+		
+		PlotWorld pw = mp.getPWM().getPlotWorld(
+				e.getBlock().getLocation().getWorld().getName());
+		if (pw == null)
+			return;
+		
+		mp.getPlotPlayerManager().getPlotPlayer(e.getPlayer());
+		Plot plot = pw.getContainingPlot(e.getBlock().getLocation());
+		
+		if(!plot.isBeingSold() || !e.getBlock().getLocation().equals(plot.getSellSignLocation()))
+			return;
+		
+		if(!plot.getOwner().equals(e.getPlayer().getName())){
+			e.setCancelled(true);
+			e.getPlayer().sendMessage(ChatColor.YELLOW + "Only the plot owner can destroy that!");
+			return;
+		}
+		
+		plot.setSold();
+		
+		e.getBlock().setType(Material.AIR);
+		e.setCancelled(true);
+		
+		e.getPlayer().sendMessage(ChatColor.BLUE + "Selling canceled!");
+	}
+	
+	@EventHandler
 	public void onSignChanged(SignChangeEvent e) {
 
 		PlotWorld pw = mp.getPWM().getPlotWorld(

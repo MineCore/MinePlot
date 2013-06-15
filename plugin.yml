@@ -21,7 +21,6 @@ commands:
             /<command> <plot_name> allowed - Lists who is in the list of allowed players for the plot
             /<command> <plot_name> rename <new_name> - Renames your plot
             /<command> <plot_name> destroy - Removes the plot from your possesion with no reimbursement
-            /<command> <plot_name> sell - Puts your plot up for sale
         permission: mineplot.plot
     mineplot:
         description: Admin commands for MinePlot
