@@ -12,6 +12,7 @@ import net.minecore.mineplot.plot.PlotSeller;
 import net.minecore.mineplot.world.PlotWorld;
 import net.minecore.mineplot.world.PlotWorldManager;
 
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -38,7 +39,7 @@ public class MinePlot extends JavaPlugin {
 		
 		mm = new PlotPlayerManager(this);
 		
-		pps = new PlayerPlotSelector(conf.getInt("tool"));
+		pps = new PlayerPlotSelector(Material.matchMaterial(conf.getString("tool")));
 		plotSeller = new PlotSeller(this);
 		
 		log.info("Loaded!");
@@ -147,7 +148,7 @@ public class MinePlot extends JavaPlugin {
 		return ((MineCore)getServer().getPluginManager().getPlugin("MineCore"));
 	}
 	
-	public int getSelectionTool(){
+	public Material getSelectionTool(){
 		return pps.getTool();
 	}
 	

@@ -214,8 +214,8 @@ public class Plot {
 						
 						Block b = w.getBlockAt(x, y, z);
 						
-						if(b.getTypeId() != Material.AIR.getId())
-							cost += bpd.getBlockPrice(b.getTypeId());
+						if(b.equals(Material.AIR))
+							cost += bpd.getBlockPrice(b);
 					}
 					
 				}

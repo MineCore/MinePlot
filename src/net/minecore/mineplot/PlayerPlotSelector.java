@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,10 +14,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class PlayerPlotSelector implements Listener {
 
-	private int tool;
+	private Material tool;
 	private Map<String, Location> location1, location2;
 
-	public PlayerPlotSelector(int tool) {
+	public PlayerPlotSelector(Material tool) {
 		this.tool = tool;
 		
 		location1 = new TreeMap<String, Location>();
@@ -26,7 +27,7 @@ public class PlayerPlotSelector implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e){
 		
-		if(e.getMaterial().getId() != tool)
+		if(!e.getMaterial().equals(tool))
 			return;
 		
 		if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
@@ -76,14 +77,14 @@ public class PlayerPlotSelector implements Listener {
 	
 	/**
 	 * Gets the tool used to select an area.
-	 * @return The ID of the item
+	 * @return The Material type of the item
 	 */
-	public int getTool() {
+	public Material getTool() {
 		return tool;
 	}
 
 	/**
-	 * Removs all selections forr the supplied player
+	 * Removes all selections for the supplied player
 	 * @param name Name of player to clear
 	 */
 	public void clear(String name) {
@@ -92,7 +93,7 @@ public class PlayerPlotSelector implements Listener {
 	}
 	
 	/**
-	 * Removs all selections forr the supplied player
+	 * Removes all selections for the supplied player
 	 * @param name Player to clear
 	 */
 	public void clear(Player p){

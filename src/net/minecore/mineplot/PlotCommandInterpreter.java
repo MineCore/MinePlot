@@ -292,7 +292,7 @@ public class PlotCommandInterpreter implements CommandExecutor {
 		
 		//Tool command
 		if(args[0].equalsIgnoreCase("tool")){
-			sender.sendMessage("The tool is a " + Material.getMaterial(mp.getSelectionTool()));
+			sender.sendMessage("The tool is a " + mp.getSelectionTool());
 			return true;
 		}
 
