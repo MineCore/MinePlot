@@ -2,7 +2,7 @@ main: net.minecore.mineplot.MinePlot
 author: Numenorean95
 authors: [tcoan98]
 name: MinePlot
-version: 1.2.1
+version: 1.2.2
 load: POSTWORLD
 depend: [MineCore]
 

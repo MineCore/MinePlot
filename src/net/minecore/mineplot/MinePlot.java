@@ -35,7 +35,7 @@ public class MinePlot extends JavaPlugin {
 		conf.options().copyDefaults(true);
 		saveConf();
 		
-		conf.addDefault("tool", 281);
+		conf.addDefault("tool", Material.BOWL.name());
 		
 		mm = new PlotPlayerManager(this);
 		
